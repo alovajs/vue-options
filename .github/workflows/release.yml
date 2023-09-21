@@ -28,7 +28,7 @@ jobs:
 
       # 执行测试和打包操作
       - name: Install deps
-        run: npm ci
+        run: npm ci --force
 
       - name: Lint check
         run: npm run lint
