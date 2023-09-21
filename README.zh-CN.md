@@ -2,9 +2,9 @@
 
 本库提供一个 alova 的 statesHook 和几个包装函数，用于兼容 alova 在 vue 的 options 写法的使用，有了它，你可以在 vue2 中使用 alova 的所有功能。
 
-[![npm](https://img.shields.io/npm/v/@alova/mock)](https://www.npmjs.com/package/@alova/mock)
-[![build](https://github.com/alovajs/mock/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/alovajs/mock/actions/workflows/main.yml)
-[![coverage status](https://coveralls.io/repos/github/alovajs/mock/badge.svg?branch=main)](https://coveralls.io/github/alovajs/mock?branch=main)
+[![npm](https://img.shields.io/npm/v/@alova/vue-options)](https://www.npmjs.com/package/@alova/vue-options)
+[![build](https://github.com/alovajs/vue-options/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/alovajs/vue-options/actions/workflows/main.yml)
+[![coverage status](https://coveralls.io/repos/github/alovajs/vue-options/badge.svg?branch=main)](https://coveralls.io/github/alovajs/vue-options?branch=main)
 ![typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 

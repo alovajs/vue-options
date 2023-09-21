@@ -2,9 +2,9 @@
 
 This library provides an alova's statesHook and several wrapper functions to be compatible with the use of alova's options writing method in vue. With it, you can use all the functions of alova in vue2.
 
-[![npm](https://img.shields.io/npm/v/@alova/mock)](https://www.npmjs.com/package/@alova/mock)
-[![build](https://github.com/alovajs/mock/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/alovajs/mock/actions/workflows/main.yml)
-[![coverage status](https://coveralls.io/repos/github/alovajs/mock/badge.svg?branch=main)](https://coveralls.io/github/alovajs/mock?branch=main)
+[![npm](https://img.shields.io/npm/v/@alova/vue-options)](https://www.npmjs.com/package/@alova/vue-options)
+[![build](https://github.com/alovajs/vue-options/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/alovajs/vue-options/actions/workflows/main.yml)
+[![coverage status](https://coveralls.io/repos/github/alovajs/vue-options/badge.svg?branch=main)](https://coveralls.io/github/alovajs/vue-options?branch=main)
 ![typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
