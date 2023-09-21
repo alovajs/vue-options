@@ -1,6 +1,6 @@
-# vue optional statesHook+包装函数
+# vue options statesHook+包装函数
 
-本库提供一个 alova 的 statesHook 和几个包装函数，用于兼容 alova 在 vue 的 optional 写法的使用，有了它，你可以在 vue2 中使用 alova 的所有功能。
+本库提供一个 alova 的 statesHook 和几个包装函数，用于兼容 alova 在 vue 的 options 写法的使用，有了它，你可以在 vue2 中使用 alova 的所有功能。
 
 [![npm](https://img.shields.io/npm/v/@alova/mock)](https://www.npmjs.com/package/@alova/mock)
 [![build](https://github.com/alovajs/mock/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/alovajs/mock/actions/workflows/main.yml)

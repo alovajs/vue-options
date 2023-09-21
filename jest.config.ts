@@ -4,6 +4,7 @@
  */
 
 export default {
+	displayName: 'vue2',
 	// All imported modules in your tests should be mocked automatically
 	// automock: false,
 
@@ -26,7 +27,13 @@ export default {
 	coverageDirectory: 'coverage',
 
 	// An array of regexp pattern strings used to skip coverage collection
-	coveragePathIgnorePatterns: ['\\\\node_modules\\\\', '/node_modules/'],
+	coveragePathIgnorePatterns: [
+		'\\\\node_modules\\\\',
+		'/node_modules/',
+		'test/utils.ts',
+		'test/mockData.ts',
+		'test/components'
+	],
 
 	// Indicates which provider should be used to instrument code for coverage
 	coverageProvider: 'v8',
@@ -74,9 +81,7 @@ export default {
 		'jsx',
 		'ts',
 		'tsx',
-		'json',
-		'node',
-		'svelte'
+		'json'
 	],
 
 	// A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
@@ -139,7 +144,6 @@ export default {
 
 	// The test environment that will be used for testing
 	testEnvironment: 'jsdom',
-
 	testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
 
 	// An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
@@ -159,11 +163,13 @@ export default {
 
 	// A map from regular expressions to paths to transformers
 	transform: {
-		'\\.(j|t)sx?$': 'ts-jest'
+		'\\.(j|t)sx?$': 'ts-jest',
+		'^.+\\.vue$': '@vue/vue2-jest'
 	},
 
 	// An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-	transformIgnorePatterns: ['/node_modules/(?!alova/)']
+	// 还需要在tsconfig.json中设置allowJs为true
+	transformIgnorePatterns: ['/node_modules/(?!(alova|@alova/mock))']
 
 	// An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
 	// unmockedModulePathPatterns: undefined,

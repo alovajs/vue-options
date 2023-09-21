@@ -32,8 +32,8 @@ exports.banner = `/**
 
 const compilePath = (exports.compilePath = {
 	external: ['alova'],
-	packageName: 'AlovaMock',
+	packageName: 'AlovaVueOptions',
 	input: 'src/index.ts',
-	output: suffix => `dist/alova-mock.${suffix}.js`
+	output: suffix => `dist/alova-vue-options.${suffix}.js`
 });
 exports.external = compilePath.external;

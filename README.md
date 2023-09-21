@@ -1,6 +1,6 @@
-# vue optional statesHook+wrapper function
+# vue options statesHook+wrapper function
 
-This library provides an alova's statesHook and several wrapper functions to be compatible with the use of alova's optional writing method in vue. With it, you can use all the functions of alova in vue2.
+This library provides an alova's statesHook and several wrapper functions to be compatible with the use of alova's options writing method in vue. With it, you can use all the functions of alova in vue2.
 
 [![npm](https://img.shields.io/npm/v/@alova/mock)](https://www.npmjs.com/package/@alova/mock)
 [![build](https://github.com/alovajs/mock/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/alovajs/mock/actions/workflows/main.yml)
