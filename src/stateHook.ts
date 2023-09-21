@@ -44,4 +44,4 @@ export default {
 			});
 		});
 	}
-} as StatesHook<any, any>;
+} as StatesHook<unknown, unknown>;

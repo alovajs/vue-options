@@ -36,4 +36,4 @@ interface VueHookMapperMixin<GR extends UseHookCallers> {
 declare function mapAlovaHook<GR extends UseHookCallers>(mapGetter: UseHookMapGetter<GR>): VueHookMapperMixin<GR>[];
 
 /** vue options statesHook */
-declare const VueOptionsStateHook: StatesHook<any, any>;
+declare const VueOptionsStateHook: StatesHook<unknown, unknown>;
