@@ -28,7 +28,7 @@ export default {
 	},
 	mixins: mapAlovaHook(function () {
 		return {
-			testFetcher: [useFetcher]
+			testFetcher: useFetcher()
 		};
 	}),
 	emits: ['success', 'error', 'complete'],

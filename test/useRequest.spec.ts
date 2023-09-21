@@ -1,27 +1,36 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/vue';
+import { useRequest } from 'alova';
 import { mapAlovaHook } from '../src';
 import TestRequest from './components/TestRequest.vue';
 import { alovaInst } from './mockData';
 import { eventObj, untilCbCalled } from './utils';
 
+const ee = useRequest(alovaInst.Get<number>('/'), {
+	immediate: false
+});
+
+ee.loading;
+
+const aa = mapAlovaHook(function () {
+	return {
+		test1: useRequest(alovaInst.Get<number>('/'), {
+			immediate: false
+		})
+	};
+});
+
+type bb = ReturnType<(typeof aa)[0]['data']>['test1'];
+type cc = (typeof aa)[0]['methods'];
+
 describe('vue options request hook', () => {
 	test('must return object which contains use hook function and params', async () => {
-		let mixins = mapAlovaHook(function () {
+		const mixins = mapAlovaHook(function () {
 			return [];
 		} as any);
 		expect(() => {
 			mixins[0].created.call({});
 		}).toThrow('expect receive an object which contains use hook return values');
-
-		mixins = mapAlovaHook(function () {
-			return {
-				test1: ['string', 1, 2]
-			};
-		} as any);
-		expect(() => {
-			mixins[0].created.call({});
-		}).toThrow('use hook function must be a function');
 	});
 
 	test('the callback of mapAlovaHook can access context in both this and the first param', async () => {

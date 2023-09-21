@@ -31,17 +31,10 @@ export default <GR extends UseHookCallers>(mapGetter: UseHookMapGetter<GR>) => {
 
 			// 在created阶段遍历发送请求
 			for (const dataKey in hookMapper) {
-				const [useHook, ...params] = hookMapper[dataKey],
-					lastParam = params[params.length - 1];
-				myAssert(typeof useHook === 'function', 'use hook function must be a function');
-
-				// 为了将vue对象和dataKey传入alova内部，如果未传入config则创建一个
-				let config = {} as Record<string, any>;
-				if (isPlainObject(lastParam)) {
-					config = lastParam;
-				} else {
-					params.push(config);
-				}
+				// 可以在useHookReturns中通过_$c获取useHook的config对象引用，将vue对象和dataKey传入alova内部
+				const useHookReturns = hookMapper[dataKey],
+					config = useHookReturns._$c || {};
+				delete useHookReturns._$c;
 				config.dataKey = dataKey;
 				config.component = vm;
 
@@ -49,7 +42,7 @@ export default <GR extends UseHookCallers>(mapGetter: UseHookMapGetter<GR>) => {
 				Object.defineProperty(vm, dataKey, {
 					get: () => (vm as any)[vueComponentAlovaHookStateKey][dataKey] || {}
 				});
-				const [states, fns] = splitStatesAndFn(useHook(...params));
+				const [states, fns] = splitStatesAndFn(useHookReturns);
 				if (vm.$set) {
 					// vue2
 					vm.$set((vm as any)[vueComponentAlovaHookStateKey], dataKey, states);

@@ -1,5 +1,6 @@
-import { createAlovaMockAdapter, defineMock } from '@alova/mock';
+import { defineMock } from '@alova/mock';
 import { createAlova } from 'alova';
+import GlobalFetch from 'alova/GlobalFetch';
 import { VueOptionsStateHook } from '../src';
 
 const mockData = defineMock({
@@ -18,14 +19,15 @@ export const alovaInst = createAlova({
 	baseURL: 'http://example.com',
 	statesHook: VueOptionsStateHook,
 	localCache: null,
-	requestAdapter: createAlovaMockAdapter([mockData], {
-		delay: 50,
-		onMockResponse(response) {
-			return {
-				headers: {},
-				response: response.body
-			};
-		},
-		mockRequestLogger: false
-	})
+	requestAdapter: GlobalFetch()
+	// requestAdapter: createAlovaMockAdapter([mockData], {
+	// 	delay: 50,
+	// 	onMockResponse(response) {
+	// 		return {
+	// 			headers: {},
+	// 			response: response.body
+	// 		};
+	// 	},
+	// 	mockRequestLogger: false
+	// })
 });

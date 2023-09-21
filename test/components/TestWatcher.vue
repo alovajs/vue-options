@@ -34,15 +34,14 @@ export default {
 	},
 	mixins: mapAlovaHook(function () {
 		return {
-			testWatcher: [
-				useWatcher,
-				() => this.methodHandler(this.state1, this.state2.v),
-				['state1', 'state2.v'],
-				{
-					immediate: this.immediate,
-					initialData: {}
-				}
-			]
+			testWatcher: useWatcher(
+        () => this.methodHandler(this.state1, this.state2.v),
+        ['state1', 'state2.v'], 
+        {
+          immediate: this.immediate,
+          initialData: {}
+        }
+      ),
 		};
 	}),
 	data() {
