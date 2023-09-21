@@ -33,9 +33,9 @@ jobs:
       - name: Lint check
         run: npm run lint
 
-      # 这条命令包含了测试
+      # 这条命令包含了测试，同时测试vue2和vue3
       - name: Unit tests
-        run: npm run test
+        run: npm run test && npm run test:vue3
 
   release:
     runs-on: ubuntu-latest
@@ -56,10 +56,10 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      - name: Test SSR
-        run: npm run test:node
+      - name: Test vue3
+        run: npm run test:vue3
 
-      # 这条命令包含了测试和上传覆盖率
+      # 这条命令测试vue2，并且上传覆盖率
       - name: Coverage
         run: npm run coveralls
 

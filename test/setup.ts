@@ -1,10 +1,1 @@
-// 防止Vue warn打印
-const warn = console.warn;
-console.warn = (...args: any[]) => {
-	args = args.filter((a: any) => !/vue warn/i.test(a));
-	if (args.length > 0) {
-		warn.apply(console, args);
-	}
-};
-
-(global as any).isSSR = typeof window === 'undefined';
+(global as any).isVue3 = process.env.VUE_VERSION === 'v3';
