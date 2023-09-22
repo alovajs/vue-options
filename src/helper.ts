@@ -5,7 +5,7 @@
  */
 export const splitStatesAndFn = (useHookReturns: Record<string, any>) => {
 		const states = {} as Record<string, any>,
-			fns = {} as Record<string, (...args: any[]) => any>;
+			fns = {} as Record<string, (...args: any) => any>;
 		Object.keys(useHookReturns).forEach(key => {
 			const item = useHookReturns[key];
 			if (typeof item === 'function') {

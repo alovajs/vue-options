@@ -52,7 +52,7 @@ export default <GR extends UseHookCallers>(mapGetter: UseHookMapGetter<GR>) => {
 				}
 				/* c8 ignore stop */
 				for (const key in fns) {
-					(vm as any)[dataKey + '$' + key] = function (...args: any[]) {
+					(vm as any)[dataKey + '$' + key] = function (...args: any) {
 						return fns[key](...args);
 					};
 				}

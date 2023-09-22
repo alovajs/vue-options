@@ -6,7 +6,7 @@ type UseHookMapGetter<GR extends UseHookCallers> = (this: Vue, context: Vue) => 
 type PickFunction<T extends Record<string, any>, U = true> = Pick<
 	T,
 	{
-		[K in keyof T]: T[K] extends (...args: any[]) => any ? (U extends true ? K : never) : U extends false ? K : never;
+		[K in keyof T]: T[K] extends (...args: any) => any ? (U extends true ? K : never) : U extends false ? K : never;
 	}[keyof T]
 >;
 type FlattenObjectKeys<T extends Record<string, unknown>, K = keyof T> = K extends string
