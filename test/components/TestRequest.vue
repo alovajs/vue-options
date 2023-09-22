@@ -29,17 +29,13 @@ export default {
 	},
 	mixins: mapAlovaHook(function () {
 		return {
-			testRequest: [
-				useRequest,
-				this.method,
-				{
-					immediate: this.immediate,
-					initialData: {},
-					managedStates: {
-						extraData: 1
-					}
+			testRequest: useRequest(this.method, {
+				immediate: this.immediate,
+				initialData: {},
+				managedStates: {
+					extraData: 1
 				}
-			]
+			})
 			// testRequest: useRequest((arg1, arg2) => Get, {})
 		};
 	}),
