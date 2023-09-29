@@ -34,12 +34,12 @@ yarn add alova @alova/vue-options
 ```javascript
 import { createAlova, Method } from 'alova';
 import GlobalFetch from 'alova/GlobalFetch';
-import { VueOptionsStateHook } from '@alova/vue-options';
+import { VueOptionsHook } from '@alova/vue-options';
 
 // api.js
 const alovaInst = createAlova({
 	baseURL: 'http://example.com',
-	statesHook: VueOptionsStateHook,
+	statesHook: VueOptionsHook,
 	requestAdapter: GlobalFetch(),
 	responded: response => response.json()
 });

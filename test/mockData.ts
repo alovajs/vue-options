@@ -1,6 +1,6 @@
 import { createAlovaMockAdapter, defineMock } from '@alova/mock';
 import { createAlova } from 'alova';
-import { VueOptionsStateHook } from '../src';
+import { VueOptionsHook } from '../src';
 
 const mockData = defineMock({
 	'/unit-test': ({ query }) => ({
@@ -16,7 +16,7 @@ const mockData = defineMock({
 // create a alova instance
 export const alovaInst = createAlova({
 	baseURL: 'http://example.com',
-	statesHook: VueOptionsStateHook,
+	statesHook: VueOptionsHook,
 	localCache: null,
 	requestAdapter: createAlovaMockAdapter([mockData], {
 		delay: 50,
