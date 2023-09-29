@@ -1,2 +1,2 @@
 export { default as mapAlovaHook } from './mapAlovaHook';
-export { default as VueOptionsStateHook } from './stateHook';
+export { default as VueOptionsHook } from './stateHook';
