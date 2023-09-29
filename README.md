@@ -25,11 +25,11 @@ yarn add alova @alova/vue-options
 
 ```
 
-> alova version needs to be >= 2.13.1
+> alova version >= 2.13.1
 
 ## Usage
 
-First use `vueOptionStatesHook` to create an alova instance.
+First use `vueOptionHook` to create an alova instance.
 
 ```javascript
 import { createAlova, Method } from 'alova';
@@ -76,9 +76,10 @@ Below is a complete example.
 
 	export default {
 		// mapAlovaHook will return the mixins array, and the usage of use hook is the same as before
-		mixins: mapAlovaHook(function () {
-			//You can access the component instance through this, but note that this function cannot be an arrow function
-			console.log(this);
+		mixins: mapAlovaHook(function (vm) {
+			//You can access the component instance through this or vm
+			// when access this, the callback cannot be an arrow function
+			console.log(this, vm);
 			return {
 				todoRequest: useRequest(getData)
 			};
@@ -98,7 +99,6 @@ Below is a complete example.
 			});
 		},
 		mounted() {
-			this.a;
 			this.todoRequest$onComplete(event => {
 				console.log('complete', event);
 			});
@@ -134,7 +134,9 @@ mapAlovaHook(vm => {
 
 ## Type
 
-Whether typescript is used or not, the mapped value will have the correct type, for example:
+### Type inference
+
+`@alova/vue-options` provides complete type support, whether typescript is used or not, the type of mapped value will be infered automatically, for example:
 
 ```javascript
 this.todoRequest.loading; // boolean
@@ -147,11 +149,11 @@ this.todoRequest$onComplete; // (handler: CompleteHandler) => void
 // ...
 ```
 
-## Add types for response data
+### Add types for response data
 
 Except for `this.todoRequest.data`, all other values have the correct type, so how to set the type for `data` too? In fact, it is the same as alova used in other environments.
 
-### javascript
+**javascript**
 
 In javascript, you can use type annotations to add types. The first two generic parameters of Method are `unknown`, and the third generic parameter is the type of response data.
 
@@ -162,10 +164,10 @@ import { Method } from 'alova';
 export const getData = () => alovaInst.Get('/todolist');
 ```
 
-### typescript
+**typescript**
 
 To add response data type in typescript, please read [alova documentation typescript chapter](https://alova.js.org/tutorial/advanced/typescript/#the-type-of-response-data)
 
-##LICENSE
+## LICENSE
 
 [MIT](https://en.wikipedia.org/wiki/MIT_License)
