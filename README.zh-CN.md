@@ -25,11 +25,11 @@ yarn add alova @alova/vue-options
 
 ```
 
-> alova 版本需大于 2.13.1
+> alova 版本 >= 2.13.1
 
 ## 用法
 
-先使用`vueOptionStatesHook`创建 alova 实例。
+先使用`vueOptionHook`创建 alova 实例。
 
 ```javascript
 import { createAlova, Method } from 'alova';
@@ -76,9 +76,10 @@ export const getData = () => alovaInst.Get('/todolist');
 
 	export default {
 		// mapAlovaHook将返回mixins数组，use hook的用法与之前一致
-		mixins: mapAlovaHook(function () {
-			// 可以通过this来访问组件实例，但注意此函数不能为箭头函数
-			console.log(this);
+		mixins: mapAlovaHook(function (vm) {
+			// 可以通过this或vm来访问组件实例
+			// 使用this时，此回调函数不能为箭头函数
+			console.log(this, vm);
 			return {
 				todoRequest: useRequest(getData)
 			};
@@ -98,7 +99,6 @@ export const getData = () => alovaInst.Get('/todolist');
 			});
 		},
 		mounted() {
-			this.a;
 			this.todoRequest$onComplete(event => {
 				console.log('complete', event);
 			});
@@ -134,7 +134,9 @@ mapAlovaHook(vm => {
 
 ## 类型
 
-无论是否使用 typescript，映射的值都会存在正确类型，例如：
+### 类型推断
+
+`@alova/vue-options`提供了完整的 ts 类型支持，无论是否使用 typescript，映射的值类型都会被自动推断，例如：
 
 ```javascript
 this.todoRequest.loading; // boolean
@@ -147,11 +149,11 @@ this.todoRequest$onComplete; // (handler: CompleteHandler) => void
 // ...
 ```
 
-## 为响应数据添加类型
+### 为响应数据添加类型
 
 除了`this.todoRequest.data`外，其他值都有了正确的类型，那么如何给`data`也设置类型呢？其实与 alova 在其他环境中使用是相同。
 
-### javascript
+**javascript**
 
 在 javascript 中可以使用类型注释添加类型，Method 的前两个泛型参数为`unknown`，第三个泛型参数就是响应数据的类型
 
@@ -162,7 +164,7 @@ import { Method } from 'alova';
 export const getData = () => alovaInst.Get('/todolist');
 ```
 
-### typescript
+**typescript**
 
 在 typescript 中添加响应数据类型，请阅读 [alova 文档 typescript 章节](https://alova.js.org/tutorial/advanced/typescript/#the-type-of-response-data)
 
