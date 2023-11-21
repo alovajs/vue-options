@@ -2,7 +2,7 @@ import Vue from 'vue';
 import { UseHookCallers, UseHookMapGetter, VueHookMapperMixin } from '../typings';
 import { isPlainObject, myAssert, splitStatesAndFn } from './helper';
 
-const vueComponentAlovaHookStateKey = 'ALOVA_USE_HOOK_STATES$__';
+const vueComponentAlovaHookStateKey = 'alovaHook$';
 /**
  * 将useHook的返回值和操作函数动态映射到vueComponent上
  *
@@ -40,7 +40,8 @@ export default <GR extends UseHookCallers>(mapGetter: UseHookMapGetter<GR>) => {
 
 				// 不设置set函数，禁止覆盖use hook对应的对象
 				Object.defineProperty(vm, dataKey, {
-					get: () => (vm as any)[vueComponentAlovaHookStateKey][dataKey] || {}
+					get: () => (vm as any)[vueComponentAlovaHookStateKey][dataKey] || {},
+					set: value => ((vm as any)[vueComponentAlovaHookStateKey][dataKey] = value)
 				});
 				const [states, fns] = splitStatesAndFn(useHookReturns);
 				if (vm.$set) {

@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/vue';
 import { mapAlovaHook } from '../src';
+import RequestWithSameConfig from './components/RequestWithSameConfig.vue';
 import TestRequest from './components/TestRequest.vue';
 import { alovaInst } from './mockData';
 import { eventObj, untilCbCalled } from './utils';
@@ -61,8 +62,8 @@ describe('vue options request hook', () => {
 					params: { a: 'a', b: 'str' }
 				})
 			);
-			expect(successFn).toBeCalledTimes(1);
-			expect(completeFn).toBeCalledTimes(1);
+			expect(successFn).toHaveBeenCalledTimes(1);
+			expect(completeFn).toHaveBeenCalledTimes(1);
 		});
 	});
 
@@ -92,8 +93,8 @@ describe('vue options request hook', () => {
 			expect(screen.getByRole('loading')).toHaveTextContent('loaded');
 			expect(screen.getByRole('error')).toHaveTextContent('api error');
 			expect(screen.getByRole('data')).toHaveTextContent('{}');
-			expect(errorFn).toBeCalledTimes(1);
-			expect(completeFn).toBeCalledTimes(1);
+			expect(errorFn).toHaveBeenCalledTimes(1);
+			expect(completeFn).toHaveBeenCalledTimes(1);
 		});
 	});
 
@@ -121,8 +122,8 @@ describe('vue options request hook', () => {
 		expect(screen.getByRole('loading')).toHaveTextContent('loaded');
 		expect(screen.getByRole('error')).toHaveTextContent('');
 		expect(screen.getByRole('data')).toHaveTextContent('{}');
-		expect(successFn).not.toBeCalled();
-		expect(completeFn).not.toBeCalled();
+		expect(successFn).not.toHaveBeenCalled();
+		expect(completeFn).not.toHaveBeenCalled();
 
 		fireEvent.click(screen.getByRole('btnSend'));
 		await waitFor(() => {
@@ -135,8 +136,66 @@ describe('vue options request hook', () => {
 					params: {}
 				})
 			);
-			expect(successFn).toBeCalledTimes(1);
-			expect(completeFn).toBeCalledTimes(1);
+			expect(successFn).toHaveBeenCalledTimes(1);
+			expect(completeFn).toHaveBeenCalledTimes(1);
+		});
+	});
+
+	test('should get the right value in computed value and set computed value', async () => {
+		render(TestRequest as any, {
+			props: {
+				method: alovaInst.Get('/unit-test')
+			}
+		});
+
+		expect(screen.getByRole('loadingComputed')).toHaveTextContent('loading');
+		expect(screen.getByRole('dataComputed')).toHaveTextContent(JSON.stringify({}));
+		await waitFor(() => {
+			expect(screen.getByRole('loading')).toHaveTextContent('loaded');
+			const resJson = JSON.stringify({
+				path: '/unit-test',
+				method: 'GET',
+				params: {}
+			});
+			expect(screen.getByRole('data')).toHaveTextContent(resJson);
+			expect(screen.getByRole('loadingComputed')).toHaveTextContent('loaded');
+			expect(screen.getByRole('dataComputed')).toHaveTextContent(resJson);
+		});
+
+		fireEvent.click(screen.getByRole('btnModify'));
+		await waitFor(() => {
+			expect(screen.getByRole('dataComputed')).toHaveTextContent(
+				JSON.stringify({
+					modify: true
+				})
+			);
+		});
+	});
+
+	test('watch the hook state', async () => {
+		const watchFn = jest.fn();
+		render(TestRequest as any, {
+			props: {
+				method: alovaInst.Get('/unit-test', {
+					params: {
+						e: 'ee'
+					}
+				})
+			},
+			...eventObj({
+				watchState(data: any) {
+					watchFn(data);
+				}
+			})
+		});
+
+		await waitFor(() => {
+			expect(watchFn).toHaveBeenCalledTimes(2);
+			expect(watchFn).toHaveBeenCalledWith({
+				path: '/unit-test',
+				method: 'GET',
+				params: { e: 'ee' }
+			});
 		});
 	});
 
@@ -161,6 +220,36 @@ describe('vue options request hook', () => {
 				})
 			);
 			expect(screen.getByRole('extraData')).toHaveTextContent(''); // 暂时无法访问到managedStates中的数据
+		});
+	});
+
+	test('useRequest with the same config object', async () => {
+		const Get = alovaInst.Get('/unit-test', {
+			params: { cc: 'c' }
+		});
+		render(RequestWithSameConfig as any, {
+			props: {
+				method: Get
+			}
+		});
+
+		await waitFor(() => {
+			expect(screen.getByRole('loading1')).toHaveTextContent('loaded');
+			expect(screen.getByRole('data1')).toHaveTextContent(
+				JSON.stringify({
+					path: '/unit-test',
+					method: 'GET',
+					params: { cc: 'c' }
+				})
+			);
+			expect(screen.getByRole('loading2')).toHaveTextContent('loaded');
+			expect(screen.getByRole('data2')).toHaveTextContent(
+				JSON.stringify({
+					path: '/unit-test',
+					method: 'GET',
+					params: { cc: 'c' }
+				})
+			);
 		});
 	});
 });

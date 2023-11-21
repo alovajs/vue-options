@@ -1,4 +1,5 @@
 import { StatesHook } from 'alova';
+import { WatchHandler, WatchOptionsWithHandler } from 'vue';
 
 type UseHookCallers = Record<string, Record<string, any>>;
 type UseHookMapGetter<GR extends UseHookCallers> = (this: Vue, context: Vue) => GR;
@@ -21,7 +22,7 @@ interface VueHookMapperMixin<GR extends UseHookCallers> {
 	data(): {
 		[K in keyof GR]: PickFunction<GR[K], false>;
 	} & {
-		ALOVA_USE_HOOK_STATES$__: Record<string, any>;
+		alovaHook$: Record<string, any>;
 	};
 	methods: PickFunction<{
 		[K in FlattenObjectKeys<GR>]: K extends `${infer P}$${infer S}` ? GR[P][S] : never;
