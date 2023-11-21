@@ -40,10 +40,39 @@ type VueWatchHandler = WatchOptionsWithHandler<any> | WatchHandler<any>;
 type AlovaWatcherHandlers = Record<string, VueWatchHandler | Record<string, VueWatchHandler>>;
 
 /**
- * 映射alova的useHook状态到watch对象上
+ * 映射状态到watch对象上，使用方法如下
+ * @example
+ * ```js
+ * import { mapWatcher } from '@alova/vue-options';
+ *
+ * export default {
+ *   watch: {
+ *     ...mapWatcher({
+ *       // 映射单个watcher
+ *       'hookState1.loading'(newVal, oldVal) {},
+ *       hookState1: {
+ *         loading(newVal, oldVal) {},
+ *         data(newVal, oldVal) {},
+ *       },
+ *
+ *       // 映射多个watcher
+ *       'hookState1.data, hookState2.data'(newVal, oldVal) {},
+ *       'hookState1, hookState2': {
+ *         data(newVal, oldVal) {},
+ *       },
+ *       hookState2: {
+ *         'loading, data'(newVal, oldVal) {},
+ *       },
+ *       'hookState1, hookState2': {
+ *         'loading, data'(newVal, oldVal) {},
+ *       },
+ *     })
+ *   }
+ * }
+ * ```
  * @param watcherHandlers watcher函数对象
  */
-declare function mapAlovaWatcher(watcherHandlers: AlovaWatcherHandlers): Record<string, WatchOptionsWithHandler<any>>;
+declare function mapWatcher(watcherHandlers: AlovaWatcherHandlers): Record<string, WatchOptionsWithHandler<any>>;
 
 /**
  * vue options statesHook
