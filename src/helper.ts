@@ -23,6 +23,12 @@ export const splitStatesAndFn = (useHookReturns: Record<string, any>) => {
 	 */
 	isPlainObject = (arg: any): arg is Record<string, any> => Object.prototype.toString.call(arg) === '[object Object]',
 	/**
+	 * 判断参数是否为函数
+	 * @param fn 任意参数
+	 * @returns 该参数是否为函数
+	 */
+	isFn = (arg: any): arg is (...args: any) => any => typeof arg === 'function',
+	/**
 	 * 自定义断言函数，表达式为false时抛出错误
 	 * @param expression 判断表达式，true或false
 	 * @param msg 断言消息

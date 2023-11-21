@@ -1,4 +1,5 @@
 import { StatesHook } from 'alova';
+import { WatchHandler, WatchOptionsWithHandler } from 'vue';
 
 type UseHookCallers = Record<string, Record<string, any>>;
 type UseHookMapGetter<GR extends UseHookCallers> = (this: Vue, context: Vue) => GR;
@@ -21,7 +22,7 @@ interface VueHookMapperMixin<GR extends UseHookCallers> {
 	data(): {
 		[K in keyof GR]: PickFunction<GR[K], false>;
 	} & {
-		ALOVA_USE_HOOK_STATES$__: Record<string, any>;
+		alovaHook$: Record<string, any>;
 	};
 	methods: PickFunction<{
 		[K in FlattenObjectKeys<GR>]: K extends `${infer P}$${infer S}` ? GR[P][S] : never;
@@ -35,5 +36,16 @@ interface VueHookMapperMixin<GR extends UseHookCallers> {
  */
 declare function mapAlovaHook<GR extends UseHookCallers>(mapGetter: UseHookMapGetter<GR>): VueHookMapperMixin<GR>[];
 
-/** vue options statesHook */
+type VueWatchHandler = WatchOptionsWithHandler<any> | WatchHandler<any>;
+type AlovaWatcherHandlers = Record<string, VueWatchHandler | Record<string, VueWatchHandler>>;
+
+/**
+ * 映射alova的useHook状态到watch对象上
+ * @param watcherHandlers watcher函数对象
+ */
+declare function mapAlovaWatcher(watcherHandlers: AlovaWatcherHandlers): Record<string, WatchOptionsWithHandler<any>>;
+
+/**
+ * vue options statesHook
+ */
 declare const VueOptionsHook: StatesHook<unknown, unknown>;
