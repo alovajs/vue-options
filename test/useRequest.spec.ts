@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/vue';
 import { mapAlovaHook } from '../src';
+import RequestWithSameConfig from './components/RequestWithSameConfig.vue';
 import TestRequest from './components/TestRequest.vue';
 import { alovaInst } from './mockData';
 import { eventObj, untilCbCalled } from './utils';
@@ -161,6 +162,36 @@ describe('vue options request hook', () => {
 				})
 			);
 			expect(screen.getByRole('extraData')).toHaveTextContent(''); // 暂时无法访问到managedStates中的数据
+		});
+	});
+
+	test('useRequest with the same config object', async () => {
+		const Get = alovaInst.Get('/unit-test', {
+			params: { cc: 'c' }
+		});
+		render(RequestWithSameConfig as any, {
+			props: {
+				method: Get
+			}
+		});
+
+		await waitFor(() => {
+			expect(screen.getByRole('loading1')).toHaveTextContent('loaded');
+			expect(screen.getByRole('data1')).toHaveTextContent(
+				JSON.stringify({
+					path: '/unit-test',
+					method: 'GET',
+					params: { cc: 'c' }
+				})
+			);
+			expect(screen.getByRole('loading2')).toHaveTextContent('loaded');
+			expect(screen.getByRole('data2')).toHaveTextContent(
+				JSON.stringify({
+					path: '/unit-test',
+					method: 'GET',
+					params: { cc: 'c' }
+				})
+			);
 		});
 	});
 });

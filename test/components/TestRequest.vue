@@ -36,7 +36,6 @@ export default {
 					extraData: 1
 				}
 			})
-			// testRequest: useRequest((arg1, arg2) => Get, {})
 		};
 	}),
 	emits: ['success', 'error', 'complete'],
