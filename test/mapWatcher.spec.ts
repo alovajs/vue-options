@@ -132,4 +132,34 @@ describe('mapWatcher', () => {
 			'alovaHook$.testRequest2.data': obj1
 		});
 	});
+
+	test('build watching handlers without prefix', () => {
+		const fn1 = () => {},
+			fn2 = () => {},
+			fn3 = () => {},
+			fn4 = () => {};
+		const watchers = mapWatcher(
+			{
+				state1: fn1,
+				state2: {
+					a: fn2
+				},
+				'state3, state4': fn3,
+				'state5, state6': {
+					'a, b': fn4
+				}
+			},
+			false
+		);
+		expect(watchers).toStrictEqual({
+			state1: fn1,
+			'state2.a': fn2,
+			state3: fn3,
+			state4: fn3,
+			'state5.a': fn4,
+			'state5.b': fn4,
+			'state6.a': fn4,
+			'state6.b': fn4
+		});
+	});
 });
