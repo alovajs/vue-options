@@ -1,4 +1,4 @@
-import mapWatcher from '../src/mapWatcher';
+import { mapWatcher } from '../src';
 
 describe('mapWatcher', () => {
 	test('single watch with handler', () => {
@@ -7,12 +7,16 @@ describe('mapWatcher', () => {
 		let watchers = mapWatcher({
 			testRequest: {
 				loading: fn1,
-				data: fn2
+				data: fn2,
+				error: 'methodName1',
+				data2: [fn1, fn2, 'methodName2']
 			}
 		});
 		expect(watchers).toStrictEqual({
 			'alovaHook$.testRequest.loading': fn1,
-			'alovaHook$.testRequest.data': fn2
+			'alovaHook$.testRequest.data': fn2,
+			'alovaHook$.testRequest.error': 'methodName1',
+			'alovaHook$.testRequest.data2': [fn1, fn2, 'methodName2']
 		});
 
 		watchers = mapWatcher({
@@ -36,12 +40,14 @@ describe('mapWatcher', () => {
 		let watchers = mapWatcher({
 			testRequest: {
 				loading: obj1,
-				data: obj2
+				data: obj2,
+				error: [obj1, obj2]
 			}
 		});
 		expect(watchers).toStrictEqual({
 			'alovaHook$.testRequest.loading': obj1,
-			'alovaHook$.testRequest.data': obj2
+			'alovaHook$.testRequest.data': obj2,
+			'alovaHook$.testRequest.error': [obj1, obj2]
 		});
 
 		watchers = mapWatcher({
@@ -60,14 +66,20 @@ describe('mapWatcher', () => {
 		let watchers = mapWatcher({
 			'testRequest, testRequest2': {
 				loading: fn1,
-				data: fn2
+				data: fn2,
+				error: 'methodName1',
+				data2: [fn1, fn2, 'methodName2']
 			}
 		});
 		expect(watchers).toStrictEqual({
 			'alovaHook$.testRequest.loading': fn1,
 			'alovaHook$.testRequest.data': fn2,
 			'alovaHook$.testRequest2.loading': fn1,
-			'alovaHook$.testRequest2.data': fn2
+			'alovaHook$.testRequest2.data': fn2,
+			'alovaHook$.testRequest.error': 'methodName1',
+			'alovaHook$.testRequest2.error': 'methodName1',
+			'alovaHook$.testRequest.data2': [fn1, fn2, 'methodName2'],
+			'alovaHook$.testRequest2.data2': [fn1, fn2, 'methodName2']
 		});
 
 		watchers = mapWatcher({
@@ -91,7 +103,7 @@ describe('mapWatcher', () => {
 		});
 	});
 
-	test('batch watch with detail oject', () => {
+	test('batch watch with detail object', () => {
 		const obj1 = {
 				handler() {},
 				deep: true
