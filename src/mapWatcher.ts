@@ -1,6 +1,6 @@
 import { WatchOptionsWithHandler } from 'vue';
 import { AlovaWatcherHandlers, VueWatchHandler } from '../typings';
-import { isFn } from './helper';
+import { isFn, isPlainObject } from './helper';
 
 const mapWatcher = (watcherHandlers: AlovaWatcherHandlers, withPrefix = true, parentKey = '') => {
 	const handlerKeys = Object.keys(watcherHandlers || {});
@@ -9,7 +9,7 @@ const mapWatcher = (watcherHandlers: AlovaWatcherHandlers, withPrefix = true, pa
 		const handlerNames = key.split(/\s*,\s*/);
 		const handlerOrHandlers = watcherHandlers[key];
 		handlerNames.forEach(handlerName => {
-			if (isFn(handlerOrHandlers) || isFn((handlerOrHandlers as WatchOptionsWithHandler<any>).handler)) {
+			if (!isPlainObject(handlerOrHandlers) || isFn((handlerOrHandlers as WatchOptionsWithHandler<any>).handler)) {
 				const prefix = withPrefix ? 'alovaHook$.' : '';
 				finalHandlers[prefix + parentKey + handlerName] = handlerOrHandlers as VueWatchHandler;
 			} else {

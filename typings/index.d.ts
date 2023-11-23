@@ -36,7 +36,10 @@ interface VueHookMapperMixin<GR extends UseHookCallers> {
  */
 declare function mapAlovaHook<GR extends UseHookCallers>(mapGetter: UseHookMapGetter<GR>): VueHookMapperMixin<GR>[];
 
-type VueWatchHandler = WatchOptionsWithHandler<any> | WatchHandler<any>;
+type VueWatchHandler =
+	| WatchOptionsWithHandler<any>
+	| WatchHandler<any>
+	| Array<WatchOptionsWithHandler<any> | WatchHandler<any>>;
 type AlovaWatcherHandlers = Record<string, VueWatchHandler | Record<string, VueWatchHandler>>;
 
 /**
